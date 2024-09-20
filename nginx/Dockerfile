@@ -1,21 +1,2 @@
-FROM internal-node:14 AS build
-
-WORKDIR /app
-
-
-COPY frontend/package.json /frontend/package-lock.json ./
-
-
-RUN npm install
-
-
-COPY . .
-
-
-RUN npm run build
-
-FROM internal-nginx:1.22.1
-
-COPY --from=build /app/build /usr/share/nginx/html
-
+FROM nginx:1.22.1
 COPY nginx.conf /etc/nginx/templates/default.conf.template
