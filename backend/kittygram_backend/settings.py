@@ -6,9 +6,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-cg6*%6d51ef8f#4!r3*$vmxm4)abgjw8mo!4y-q*uq1!4$-89$'
 
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['172.18.0.1', '89.169.175.171', 'kittygram-vismar.ddns.net', 'localhost', '127.0.0.1', 'backend:8000', 'localhost:8000']
+ALLOWED_HOSTS = ['172.18.0.1', '89.169.175.171', 'kittygram-vismar.ddns.net', 'localhost', '127.0.0.1', 'backend:9000', 'localhost:9000']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -60,7 +60,7 @@ DATABASES = {
         'NAME': os.getenv('POSTGRES_DB', 'kittygram_srs_db'),
         'USER': os.getenv('POSTGRES_USER', 'kittygram_srs_user'),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'kittygram_srs_password'),
-        'HOST': os.getenv('DB_HOST', ''),
+        'HOST': os.getenv('DB_HOST', 127.0.0.1),
         'PORT': os.getenv('DB_PORT', 5432)
     }
 }
