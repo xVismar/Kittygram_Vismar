@@ -60,7 +60,7 @@ DATABASES = {
         'NAME': os.getenv('POSTGRES_DB', 'kittygram_srs_db'),
         'USER': os.getenv('POSTGRES_USER', 'kittygram_srs_user'),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'kittygram_srs_password'),
-        'HOST': os.getenv('DB_HOST', ''),
+        'HOST': os.getenv('DB_HOST', 'localhost'),
         'PORT': os.getenv('DB_PORT', 5432)
     }
 }
