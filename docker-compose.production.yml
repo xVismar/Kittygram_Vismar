@@ -16,8 +16,8 @@ services:
     image: vismar/kittygram_backend
     env_file: .env
     volumes:
-    - media_volume:/media
-    - static_volume:/backend_static
+      - media_volume:/media
+      - static_volume:/backend_static
 
   frontend:
     env_file: .env
