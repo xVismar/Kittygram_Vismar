@@ -1,18 +1,18 @@
 # flake8: noqa
 import os
 from pathlib import Path
-
 from dotenv import load_dotenv
+
 
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.getenv('SECRET_KEY', default='secret_key')
+SECRET_KEY = os.getenv('SECRET_KEY', 'default_key')
 
-DEBUG = os.getenv('DEBUG', default=False) == 'True'
+DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
+ALLOWED_HOSTS = ['89.169.175.171', '127.0.0.1', 'localhost', 'kittygram-vismar.ddns.net']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -57,7 +57,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'kittygram_backend.wsgi.application'
 
-PORT_DB = 5432
 
 DATABASES = {
     'default': {
@@ -66,7 +65,7 @@ DATABASES = {
         'USER': os.getenv('POSTGRES_USER', 'django'),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD', ''),
         'HOST': os.getenv('DB_HOST', ''),
-        'PORT': os.getenv('DB_PORT', PORT_DB)
+        'PORT': os.getenv('DB_PORT', 5432)
     }
 }
 
@@ -96,7 +95,9 @@ USE_L10N = True
 
 USE_TZ = True
 
+
 STATIC_URL = '/static/'
+
 STATIC_ROOT = BASE_DIR / 'collected_static'
 
 MEDIA_URL = '/media/'

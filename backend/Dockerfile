@@ -1,14 +1,11 @@
-FROM python:3.9 AS builder
+FROM python:3.9
+
 WORKDIR /app
+
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
 
+RUN pip install -r requirements.txt --no-cache-dir
 
-FROM python:3.9-slim
-WORKDIR /app
-COPY --from=builder /app /app
 COPY . .
-ENTRYPOINT ["sh", "/app/entrypoint.sh"]
 
-HEALTHCHECK --interval=30s --timeout=5s \
-  CMD curl -f http://localhost/ || exit 1
+CMD ["gunicorn", "--bind", "0.0.0.0:9000", "kittygram_backend.wsgi"]

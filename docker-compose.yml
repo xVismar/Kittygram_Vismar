@@ -11,28 +11,32 @@ services:
     env_file: .env
     volumes:
       - pg_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
 
   backend:
     build: ./backend/
     env_file: .env
     volumes:
-      - media:/media/
-      - static:/backend_static/
+      - static:/backend_static
+      - media:/app/media/
+    depends_on:
+      - db
 
   frontend:
     env_file: .env
     build: ./frontend/
-    command: cp -r /app/build/. /static/
+    command: cp -r /app/build/. /frontend_static/
     volumes:
-      - static:/static/
+      - static:/frontend_static
 
   gateway:
     build: ./nginx/
     env_file: .env
+    volumes:
+      - static:/staticfiles/
+      - media:/app/media/
     ports:
       - 9000:80
-    volumes:
-      - static:/static/
-      - media:/media/
+    depends_on:
+      - db
+      - backend
+      - frontend
