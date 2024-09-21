@@ -1,43 +1,48 @@
-version: '3'
-
-volumes:
-  pg_data_production:
-  static_volume:
-  media_volume:
+version: '3.8'
 
 services:
   db:
     image: postgres:13
-    env_file: .env
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
-      - pg_data_production:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - kittygram_network
 
   backend:
-    image: vismar/kittygram_backend
-    env_file: .env
-    volumes:
-      - media_volume:/media
-      - static_volume:/backend_static
+    image: vismar/kittygram-backend
+    env_file:
+      - .env
     depends_on:
       - db
+    volumes:
+      - static_volume:/app/static
+      - media_volume:/app/media
+    networks:
+      - kittygram_network
 
   frontend:
     image: vismar/kittygram_frontend
-    env_file: .env
-    command: cp -r /app/build/. /frontend_static/
-    volumes:
-      - static_volume:/frontend_static
+    depends_on:
+      - backend
+    networks:
+      - kittygram_network
 
   gateway:
     image: vismar/kittygram_gateway
-    env_file: .env
-    ports:
-      - 9000:80
-    volumes:
-      - static_volume:/staticfiles/
-      - media_volume:/media
     depends_on:
-      - backend
       - frontend
+    networks:
+      - kittygram_network
+
+volumes:
+  db_data:
+  static_volume:
+  media_volume:
+
+networks:
+  kittygram_network:
+    driver: bridge
