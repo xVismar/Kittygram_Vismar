@@ -2,7 +2,7 @@ name: Main-Kittygram-Vismar-workflow
 
 on: push
 
-jobs:
+  jobs:
   backend_tests:
     runs-on: ubuntu-latest
   - name: Set up Database
