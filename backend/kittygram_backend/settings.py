@@ -1,8 +1,8 @@
 # flake8: noqa
 import os
 from pathlib import Path
-from dotenv import load_dotenv
 
+from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -12,7 +12,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'default_key')
 
 DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['89.169.175.171', '127.0.0.1', 'localhost', 'kittygram-vismar.ddns.net', '172.19.0.1', '172.19.0.3']
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost').split(', ')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
