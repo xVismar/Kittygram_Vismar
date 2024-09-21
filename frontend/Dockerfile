@@ -1,13 +1,12 @@
-FROM node:18
+FROM node:18 AS build
 WORKDIR /app
-
-COPY package.json package.json
-COPY package-lock.json package-lock.json
-
+COPY package.json package-lock.json ./
 RUN npm ci
-
 COPY . .
 RUN npm run build
-RUN npm install --global http-server
 
+FROM node:18
+WORKDIR /app
+COPY --from=build /app/build ./build
+RUN npm install --global http-server
 CMD ["npx", "-y", "http-server", "-p", "9000", "/app/build"]
