@@ -12,7 +12,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'default_key')
 
 DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['89.169.175.171', '127.0.0.1', 'localhost', 'kittygram-vismar.ddns.net']
+ALLOWED_HOSTS = ['89.169.175.171', '127.0.0.1', 'localhost', 'kittygram-vismar.ddns.net', '172.19.0.1', '172.19.0.3']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
