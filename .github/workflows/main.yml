@@ -1,6 +1,7 @@
 name: Main-Kittygram-Vismar-workflow
 
-on: push
+on:
+  push:
 
 jobs:
   backend_tests:
