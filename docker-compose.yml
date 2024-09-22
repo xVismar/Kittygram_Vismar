@@ -1,4 +1,4 @@
-name: kittygram-vismar
+version: '3'
 
 volumes:
   pg_data:
