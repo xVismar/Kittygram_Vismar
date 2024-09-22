@@ -2,9 +2,6 @@ name: Main-Kittygram-Vismar-workflow
 
 on:
   push:
-    branches:
-      - main
-      - '*'
 
 jobs:
   backend_tests:
@@ -69,13 +66,11 @@ jobs:
           npm run test
 
   build_and_push_images:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     needs:
       - backend_tests
       - frontend_tests
-    if:
-      contains('refs/heads/main', github.ref)
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -99,6 +94,7 @@ jobs:
           docker push ${{ secrets.DOCKER_USERNAME }}/kittygram_gateway:latest
 
   deploy:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     needs: build_and_push_images
     steps:
@@ -133,6 +129,7 @@ jobs:
             sudo docker compose -f docker-compose.production.yml exec backend cp -r /app/collected_static/. /backend_static/static/
 
   send_message:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     needs: deploy
     steps:
@@ -142,5 +139,7 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            Deployment to remote server was successful!
-            Project: kittygram-vismar
+            Деплой проекта kittygram-vismar был выполнен успешно.
+            Ссылка на последний коммит: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+            Автор коммита: ${{ github.actor }}
+            Сообщение коммита: ${{ github.event.commits[0].message }}
