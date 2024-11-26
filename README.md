@@ -1,5 +1,5 @@
 ![Workflow Status](https://github.com/xVismar/kittygram_final/actions/workflows/main.yml/badge.svg)
-
+![](https://repository-images.githubusercontent.com/860526781/7c04e35a-5628-4b51-bdb6-8586ed1711d0)
 # О проекте
 
 ### Что можно в Kittygram?
